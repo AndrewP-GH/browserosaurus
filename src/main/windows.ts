@@ -104,6 +104,7 @@ async function createWindows(): Promise<void> {
   pickerWindow.setWindowButtonVisibility(false)
 
   pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
+  pickerWindow.setAlwaysOnTop(true, 'screen-saver')
 
   pickerWindow.on('hide', () => {
     pickerWindow?.hide()
