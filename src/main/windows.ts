@@ -181,6 +181,7 @@ function showPickerWindow(): void {
     pickerWindow.setPosition(inWindowPosition.x, inWindowPosition.y, false)
 
     pickerWindow.show()
+    pickerWindow.focus()
   }
 }
 
