@@ -150,6 +150,9 @@ async function createWindows(): Promise<void> {
 
 function showPickerWindow(): void {
   if (pickerWindow) {
+    // Ensure proper window level for full-screen compatibility
+    pickerWindow.setAlwaysOnTop(true, 'pop-up-menu')
+    
     const displayBounds = screen.getDisplayNearestPoint(
       screen.getCursorScreenPoint(),
     ).bounds
