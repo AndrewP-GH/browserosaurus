@@ -12,20 +12,8 @@ const config = {
     asar: false,
     extendInfo: 'plist/Info.plist',
     icon: 'src/shared/static/icon/icon.icns',
-    osxNotarize: process.env.CI
-      ? undefined
-      : {
-          keychain: '~/Library/Keychains/login.keychain-db',
-          keychainProfile: 'AC_PASSWORD',
-        },
-    osxSign: process.env.CI
-      ? undefined
-      : {
-          optionsForFile: () => ({
-            entitlements: 'plist/entitlements.mac.plist',
-            'hardened-runtime': true,
-          }),
-        },
+    osxNotarize: undefined,
+    osxSign: undefined,
     protocols: [
       {
         name: 'HTTP link',
