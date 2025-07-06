@@ -150,8 +150,6 @@ async function createWindows(): Promise<void> {
 
 function showPickerWindow(): void {
   if (pickerWindow) {
-    pickerWindow.show()
-
     const displayBounds = screen.getDisplayNearestPoint(
       screen.getCursorScreenPoint(),
     ).bounds
@@ -182,6 +180,8 @@ function showPickerWindow(): void {
     }
 
     pickerWindow.setPosition(inWindowPosition.x, inWindowPosition.y, false)
+
+    pickerWindow.show()
     pickerWindow.focus()
   }
 }
