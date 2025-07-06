@@ -3,10 +3,10 @@
 # Browserosaurus
 
 Browserosaurus is an open-source (GPLv3 license) browser prompter for macOS. It
-works by setting itself as the default browser, and any clicked links in non-browser
-apps are now sent to Browserosaurus where you are presented with a menu of all
-your installed browsers. You may now decide which app you’d like to continue
-opening the link with.
+works by setting itself as the default browser, and any clicked links in
+non-browser apps are now sent to Browserosaurus where you are presented with a
+menu of all your installed browsers. You may now decide which app you’d like to
+continue opening the link with.
 
 <img src="./docs/screenshot.jpg" alt="screenshot" />
 
@@ -14,7 +14,8 @@ opening the link with.
 
 Download Browserosaurus from the
 [GitHub releases page](https://github.com/will-stone/browserosaurus/releases/latest).
-Select **x64** for Intel machines, or **arm64** for Apple Silicon (M1) machines.
+This build is optimised for **Apple Silicon (ARM64)** machines with maximum
+performance optimisations.
 
 Or use [Homebrew](https://formulae.brew.sh/cask/browserosaurus#default). Thank
 you very much to [@i0ntempest](https://github.com/i0ntempest) and
