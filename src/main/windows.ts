@@ -104,7 +104,7 @@ async function createWindows(): Promise<void> {
   pickerWindow.setWindowButtonVisibility(false)
 
   pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
-  pickerWindow.setAlwaysOnTop(true, 'pop-up-menu')
+  pickerWindow.setAlwaysOnTop(true, 'screen-saver')
 
   pickerWindow.on('hide', () => {
     pickerWindow?.hide()
@@ -150,6 +150,8 @@ async function createWindows(): Promise<void> {
 
 function showPickerWindow(): void {
   if (pickerWindow) {
+    pickerWindow.setAlwaysOnTop(true, 'floating')
+
     const displayBounds = screen.getDisplayNearestPoint(
       screen.getCursorScreenPoint(),
     ).bounds
