@@ -152,8 +152,8 @@ function showPickerWindow(): void {
     const bWindowBounds = pickerWindow.getBounds();
     const activeScreen = screen.getDisplayNearestPoint(mousePoint);
 
-    let x = mousePoint.x - bWindowBounds.width / 2;
-    let y = mousePoint.y - bWindowBounds.height / 2;
+    let x = Math.floor(mousePoint.x - bWindowBounds.width / 2);
+    let y = Math.floor(mousePoint.y - bWindowBounds.height / 2);
 
     // Ensure the window stays within the active screen bounds
     if (x < activeScreen.bounds.x) {
