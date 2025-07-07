@@ -71,7 +71,6 @@ async function createWindows(): Promise<void> {
 
   pickerWindow = new BrowserWindow({
     alwaysOnTop: true,
-    center: true,
     frame: true,
     fullscreen: false,
     fullscreenable: false,
@@ -103,8 +102,7 @@ async function createWindows(): Promise<void> {
 
   pickerWindow.setWindowButtonVisibility(false)
 
-  pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
-  pickerWindow.setAlwaysOnTop(true, 'pop-up-menu')
+  pickerWindow.setAlwaysOnTop(true, 'screen-saver')
 
   pickerWindow.on('hide', () => {
     pickerWindow?.hide()
@@ -150,39 +148,30 @@ async function createWindows(): Promise<void> {
 
 function showPickerWindow(): void {
   if (pickerWindow) {
-    const displayBounds = screen.getDisplayNearestPoint(
-      screen.getCursorScreenPoint(),
-    ).bounds
+    const mousePoint = screen.getCursorScreenPoint();
+    const bWindowBounds = pickerWindow.getBounds();
+    const activeScreen = screen.getDisplayNearestPoint(mousePoint);
 
-    const displayEnd = {
-      x: displayBounds.x + displayBounds.width,
-      y: displayBounds.y + displayBounds.height,
+    let x = mousePoint.x - bWindowBounds.width / 2;
+    let y = mousePoint.y - bWindowBounds.height / 2;
+
+    // Ensure the window stays within the active screen bounds
+    if (x < activeScreen.bounds.x) {
+      x = activeScreen.bounds.x;
+    } else if (x + bWindowBounds.width > activeScreen.bounds.x + activeScreen.bounds.width) {
+      x = activeScreen.bounds.x + activeScreen.bounds.width - bWindowBounds.width;
     }
 
-    const mousePoint = screen.getCursorScreenPoint()
-
-    const bWindowBounds = pickerWindow.getBounds()
-
-    const nudge = {
-      x: -125,
-      y: -30,
+    if (y < activeScreen.bounds.y) {
+      y = activeScreen.bounds.y;
+    } else if (y + bWindowBounds.height > activeScreen.bounds.y + activeScreen.bounds.height) {
+      y = activeScreen.bounds.y + activeScreen.bounds.height - bWindowBounds.height;
     }
 
-    const inWindowPosition = {
-      x:
-        mousePoint.x + bWindowBounds.width + nudge.x > displayEnd.x
-          ? displayEnd.x - bWindowBounds.width
-          : mousePoint.x + nudge.x,
-      y:
-        mousePoint.y + bWindowBounds.height + nudge.y > displayEnd.y
-          ? displayEnd.y - bWindowBounds.height
-          : mousePoint.y + nudge.y,
-    }
-
-    pickerWindow.setPosition(inWindowPosition.x, inWindowPosition.y, false)
-
-    pickerWindow.show()
-    pickerWindow.focus()
+    pickerWindow.setPosition(x, y, false);
+    pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+    pickerWindow.focus();
+    pickerWindow.show();
   }
 }
 
