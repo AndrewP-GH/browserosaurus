@@ -98,11 +98,11 @@ async function createWindows(): Promise<void> {
       preload: path.join(__dirname, 'preload.js'),
     },
     width: 250,
+    type: 'panel',
+    skipTaskbar: true,
   })
 
   pickerWindow.setWindowButtonVisibility(false)
-
-  pickerWindow.setAlwaysOnTop(true, 'screen-saver')
 
   pickerWindow.on('hide', () => {
     pickerWindow?.hide()
@@ -168,10 +168,17 @@ function showPickerWindow(): void {
       y = activeScreen.bounds.y + activeScreen.bounds.height - bWindowBounds.height;
     }
 
+    // Ensure window is configured for full screen visibility
+    pickerWindow.setVisibleOnAllWorkspaces(true, {
+      visibleOnFullScreen: true,
+      skipTransformProcessType: true
+    });
+    pickerWindow.setAlwaysOnTop(true, 'screen-saver', 1);
+
+    // Position and show the window
     pickerWindow.setPosition(x, y, false);
-    pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
-    pickerWindow.focus();
     pickerWindow.show();
+    pickerWindow.focus();
   }
 }
 
