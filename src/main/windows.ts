@@ -98,8 +98,7 @@ async function createWindows(): Promise<void> {
       preload: path.join(__dirname, 'preload.js'),
     },
     width: 250,
-    type: 'panel',
-    skipTaskbar: true,
+    
   })
 
   pickerWindow.setWindowButtonVisibility(false)
@@ -148,37 +147,20 @@ async function createWindows(): Promise<void> {
 
 function showPickerWindow(): void {
   if (pickerWindow) {
-    const mousePoint = screen.getCursorScreenPoint();
-    const bWindowBounds = pickerWindow.getBounds();
-    const activeScreen = screen.getDisplayNearestPoint(mousePoint);
+    const { x: mouseX, y: mouseY } = screen.getCursorScreenPoint();
+    const { width, height } = pickerWindow.getBounds();
+    const activeScreen = screen.getDisplayNearestPoint({ x: mouseX, y: mouseY });
 
-    let x = Math.floor(mousePoint.x - bWindowBounds.width / 2);
-    let y = Math.floor(mousePoint.y - bWindowBounds.height / 2);
+    const { x: screenX, y: screenY, width: screenWidth, height: screenHeight } = activeScreen.bounds;
 
-    // Ensure the window stays within the active screen bounds
-    if (x < activeScreen.bounds.x) {
-      x = activeScreen.bounds.x;
-    } else if (x + bWindowBounds.width > activeScreen.bounds.x + activeScreen.bounds.width) {
-      x = activeScreen.bounds.x + activeScreen.bounds.width - bWindowBounds.width;
-    }
+    const finalX = Math.max(screenX, Math.min(Math.floor(mouseX - width / 2), screenX + screenWidth - width));
+    const finalY = Math.max(screenY, Math.min(Math.floor(mouseY - height / 2), screenY + screenHeight - height));
 
-    if (y < activeScreen.bounds.y) {
-      y = activeScreen.bounds.y;
-    } else if (y + bWindowBounds.height > activeScreen.bounds.y + activeScreen.bounds.height) {
-      y = activeScreen.bounds.y + activeScreen.bounds.height - bWindowBounds.height;
-    }
+    pickerWindow.setPosition(finalX, finalY, false)
 
-    // Ensure window is configured for full screen visibility
-    pickerWindow.setVisibleOnAllWorkspaces(true, {
-      visibleOnFullScreen: true,
-      skipTransformProcessType: true
-    });
-    pickerWindow.setAlwaysOnTop(true, 'screen-saver', 1);
-
-    // Position and show the window
-    pickerWindow.setPosition(x, y, false);
-    pickerWindow.show();
-    pickerWindow.focus();
+    pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
+    pickerWindow.showInactive()
+    pickerWindow.focus()
   }
 }
 
