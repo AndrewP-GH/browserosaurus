@@ -24,10 +24,7 @@ for ARM Mac, ensuring the smallest possible application size.
 
 ## Publishing/Copying the Application
 
-To copy the built application to the `/Applications` folder without unexpected
-size increases, use `rsync` instead of `cp -R`. This is crucial as `cp -R` can
-sometimes lead to macOS expanding the application bundle with additional
-metadata or resources, resulting in a larger file size.
+To copy the built application to the `/Applications` folder:
 
 1.  **Remove any existing custom application (optional, but recommended for
     fresh installs):**
@@ -36,13 +33,36 @@ metadata or resources, resulting in a larger file size.
     rm -rf /Applications/Browserosaurus-Custom.app
     ```
 
-2.  **Copy the built application using `rsync`:**
+2.  **Copy the built application:**
     ```bash
-    rsync -ah /Users/andrejparamonov/RiderProjects/browserosaurus/out/Browserosaurus-darwin-arm64/Browserosaurus.app /Applications/Browserosaurus-Custom.app
+    cp -R /Users/andrejparamonov/RiderProjects/browserosaurus/out/Browserosaurus-darwin-arm64/Browserosaurus.app /Applications/Browserosaurus-Custom.app
     ```
-    - `-a`: Archive mode; preserves permissions, ownership, timestamps, and
-      copies recursively.
-    - `-h`: Human-readable output.
+
+## Handling "App is Damaged" Message
+
+If macOS reports the app as "damaged" or prevents it from opening, this is
+typically due to Gatekeeper, which blocks unsigned or unnotarized applications.
+To bypass this:
+
+**Method 1: Right-Click Open**
+
+1.  Open your `/Applications` folder in Finder.
+2.  Right-click (or Control-click) on `Browserosaurus-Custom.app`.
+3.  Select "Open" from the contextual menu.
+4.  You will see a dialog box stating that the app is from an unidentified
+    developer. Click "Open" again.
+
+**Method 2: Using Terminal (if Method 1 doesn't work)**
+
+1.  Open Terminal (you can find it in `/Applications/Utilities/Terminal.app`).
+2.  Paste the following command and press Enter:
+    ```bash
+    xattr -d com.apple.quarantine /Applications/Browserosaurus-Custom.app
+    ```
+    This command removes the quarantine attribute from the application, which
+    often resolves the "damaged" message.
+3.  After running the command, try opening the app normally from your
+    Applications folder.
 
 ## Verifying Application Size
 
@@ -64,5 +84,4 @@ The expected size for an ARM64 build of this application is approximately 250MB.
 - **Code Minification/Uglification:** Ensure JavaScript, CSS, and HTML are
   minified.
 - **Prune Unused Code:** Utilize code splitting and tree-shaking.
-- **Avoid `cp -R` for final deployment:** Use `rsync -ah` to prevent unexpected
-  size increases when copying to `/Applications`.
+- **Copy Method:** Use `cp -R` for copying the application bundle.
