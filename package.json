@@ -29,6 +29,7 @@
     "package:arm": "NODE_ENV=production electron-forge package --platform=darwin --arch=arm64",
     "package:intel": "NODE_ENV=production electron-forge package --platform=darwin --arch=x64",
     "prepare": "husky",
+    "rebuild": "node node_modules/@electron/rebuild/lib/cli.js",
     "release": "npm run doctor && bump --commit \"chore: release v\" && npm run make",
     "start": "ELECTRON_DISABLE_SECURITY_WARNINGS=true electron-forge start",
     "test": "jest",
@@ -37,7 +38,8 @@
     "website-css:watch": "npx tailwindcss -i node_modules/tailwindcss/tailwind.css -o ./docs/style.css --content docs/index.html -m --watch"
   },
   "dependencies": {
-    "file-icon": "^5.1.1"
+    "file-icon": "^5.1.1",
+    "node-addon-api": "^8.5.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
@@ -51,6 +53,7 @@
     "@electron-forge/plugin-vite": "~7.2.0",
     "@electron-forge/plugin-webpack": "~7.2.0",
     "@electron-forge/shared-types": "~7.2.0",
+    "@electron/rebuild": "^4.0.1",
     "@reduxjs/toolkit": "^2.3.0",
     "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^16.0.1",
