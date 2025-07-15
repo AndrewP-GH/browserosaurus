@@ -38,32 +38,6 @@ To copy the built application to the `/Applications` folder:
     cp -R /Users/andrejparamonov/RiderProjects/browserosaurus/out/Browserosaurus-darwin-arm64/Browserosaurus.app /Applications/Browserosaurus-Custom.app
     ```
 
-## Handling "App is Damaged" Message
-
-If macOS reports the app as "damaged" or prevents it from opening, this is
-typically due to Gatekeeper, which blocks unsigned or unnotarized applications.
-To bypass this:
-
-**Method 1: Right-Click Open**
-
-1.  Open your `/Applications` folder in Finder.
-2.  Right-click (or Control-click) on `Browserosaurus-Custom.app`.
-3.  Select "Open" from the contextual menu.
-4.  You will see a dialog box stating that the app is from an unidentified
-    developer. Click "Open" again.
-
-**Method 2: Using Terminal (if Method 1 doesn't work)**
-
-1.  Open Terminal (you can find it in `/Applications/Utilities/Terminal.app`).
-2.  Paste the following command and press Enter:
-    ```bash
-    xattr -d com.apple.quarantine /Applications/Browserosaurus-Custom.app
-    ```
-    This command removes the quarantine attribute from the application, which
-    often resolves the "damaged" message.
-3.  After running the command, try opening the app normally from your
-    Applications folder.
-
 ## Verifying Application Size
 
 After copying, you can verify the size of the installed application using:
