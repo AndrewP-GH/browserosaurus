@@ -1,7 +1,21 @@
+import { createRequire } from 'node:module'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { app, BrowserWindow, screen } from 'electron'
+
+const require = createRequire(import.meta.url)
+let macosWindowUtils: { setWindowProperties: (handle: Buffer) => void } | null = null
+
+// Only load native module on macOS
+if (process.platform === 'darwin') {
+  try {
+    macosWindowUtils = require('../../build/Release/macos_window_utils.node')
+  } catch {
+    // Silently fail if native module not available
+    macosWindowUtils = null
+  }
+}
 
 import { database } from './database.js'
 import {
@@ -102,6 +116,11 @@ async function createWindows(): Promise<void> {
 
   pickerWindow.setWindowButtonVisibility(false)
 
+  // Apply macOS-specific window properties for fullscreen compatibility
+  if (macosWindowUtils) {
+    macosWindowUtils.setWindowProperties(pickerWindow.getNativeWindowHandle())
+  }
+
   pickerWindow.on('hide', () => {
     pickerWindow?.hide()
   })
@@ -172,11 +191,8 @@ function showPickerWindow(): void {
       ),
     )
 
-    pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
-    pickerWindow.setAlwaysOnTop(true, 'screen-saver')
     pickerWindow.setPosition(finalX, finalY, false)
     pickerWindow.show()
-    pickerWindow.focus()
   }
 }
 
