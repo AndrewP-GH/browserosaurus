@@ -86,6 +86,7 @@ async function createWindows(): Promise<void> {
   pickerWindow = new BrowserWindow({
     alwaysOnTop: true,
     center: true,
+    // prevents NSWindow nonactivating panel warnings
     ...(process.platform === 'darwin' && { type: 'panel' }),
     frame: true,
     fullscreen: false,
@@ -118,7 +119,6 @@ async function createWindows(): Promise<void> {
 
   pickerWindow.setWindowButtonVisibility(false)
 
-  // Apply macOS-specific window properties for fullscreen compatibility
   if (macosWindowUtils) {
     macosWindowUtils.setWindowProperties(pickerWindow.getNativeWindowHandle())
   }
@@ -198,8 +198,7 @@ function showPickerWindow(): void {
 
     pickerWindow.setPosition(inWindowPosition.x, inWindowPosition.y, false)
 
-    // Constructor alwaysOnTop: true should handle basic behavior
-    // macOS native module overrides provide fullscreen compatibility
+    // macOS native module handles this, others need explicit call
     if (process.platform !== 'darwin') {
       pickerWindow.setVisibleOnAllWorkspaces(true)
     }
