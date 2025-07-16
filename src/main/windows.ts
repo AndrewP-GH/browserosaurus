@@ -84,6 +84,9 @@ async function createWindows(): Promise<void> {
   const height = database.get('height')
 
   pickerWindow = new BrowserWindow({
+    alwaysOnTop: true,
+    center: true,
+    ...(process.platform === 'darwin' && { type: 'panel' }),
     frame: true,
     fullscreen: false,
     fullscreenable: false,
@@ -101,7 +104,6 @@ async function createWindows(): Promise<void> {
     title: 'Browserosaurus',
     titleBarStyle: 'hidden',
     transparent: true,
-    type: 'panel',
     vibrancy: 'popover',
     visualEffectState: 'active',
     webPreferences: {
@@ -195,6 +197,12 @@ function showPickerWindow(): void {
     }
 
     pickerWindow.setPosition(inWindowPosition.x, inWindowPosition.y, false)
+
+    // Constructor alwaysOnTop: true should handle basic behavior
+    // macOS native module overrides provide fullscreen compatibility
+    if (process.platform !== 'darwin') {
+      pickerWindow.setVisibleOnAllWorkspaces(true)
+    }
     pickerWindow.show()
   }
 }
