@@ -24,9 +24,6 @@
             ]
           }
         }],
-        ["OS!='mac'", {
-          "sources": [ "native/stub.cpp" ]
-        }]
       ]
     }
   ]
