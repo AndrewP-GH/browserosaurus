@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__context7-mcp__resolve-library-id",
+      "mcp__context7-mcp__get-library-docs",
+      "Bash(npm run build:*)",
+      "Bash(npm run:*)",
+      "Bash(npm start)",
+      "Bash(npm install)",
+      "Bash(pkill:*)",
+      "Bash(npx update-browserslist-db:*)",
+      "Bash(killall:*)",
+      "Bash(find:*)",
+      "Bash(npx electron:*)",
+      "Bash(git add:*)",
+      "Bash(mise settings:*)",
+      "Bash(grep:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)",
+      "Bash(timeout 60 npm start:*)",
+      "Bash(ELECTRON_DISABLE_GPU=1 npm start)",
+      "Bash(timeout:*)",
+      "Bash(ls:*)",
+      "Bash(open:*)",
+      "Bash(rm:*)",
+      "Bash(rg:*)",
+      "WebFetch(domain:www.electronjs.org)",
+      "WebFetch(domain:github.com)",
+      "Bash(git checkout:*)"
+    ],
+    "deny": []
+  }
+}
