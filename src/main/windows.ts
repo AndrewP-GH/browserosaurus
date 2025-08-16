@@ -104,10 +104,8 @@ async function createWindows(): Promise<void> {
 
   pickerWindow.setWindowButtonVisibility(false)
 
-  if (pickerWindow) {
-    pickerWindow.setAlwaysOnTop(true, 'floating')
-    pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
-  }
+  pickerWindow.setAlwaysOnTop(true, 'floating')
+  pickerWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
 
   pickerWindow.on('hide', () => {
     pickerWindow?.hide()
@@ -183,12 +181,6 @@ function showPickerWindow(): void {
     }
 
     pickerWindow.setPosition(inWindowPosition.x, inWindowPosition.y, false)
-
-    // Constructor alwaysOnTop: true should handle basic behavior
-    // macOS native module overrides provide fullscreen compatibility
-    if (process.platform !== 'darwin') {
-      pickerWindow.setVisibleOnAllWorkspaces(true)
-    }
     pickerWindow.show()
   }
 }
