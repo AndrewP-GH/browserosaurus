@@ -3,10 +3,10 @@
 # Browserosaurus
 
 Browserosaurus is an open-source (GPLv3 license) browser prompter for macOS. It
-works by setting itself as the default browser, and any clicked links in non-browser
-apps are now sent to Browserosaurus where you are presented with a menu of all
-your installed browsers. You may now decide which app you’d like to continue
-opening the link with.
+works by setting itself as the default browser, and any clicked links in
+non-browser apps are now sent to Browserosaurus where you are presented with a
+menu of all your installed browsers. You may now decide which app you’d like to
+continue opening the link with.
 
 <img src="./docs/screenshot.jpg" alt="screenshot" />
 
@@ -58,6 +58,53 @@ forks of this project that you may like to consider:
 - [Supporting a new browser or app](guide/supporting-a-browser-or-app.md)
 - [Setting up for development](guide/setting-up-for-development.md)
 - [Privacy policy](guide/privacy.md)
+
+### Local Release Build
+
+To build the application for local release and place it in your `/Applications`
+folder, follow these steps:
+
+1.  **Install dependencies** (if you haven't already):
+
+    ```sh
+    npm install
+    ```
+
+2.  **Build the application**:
+
+    ```sh
+    npm run package
+    ```
+
+    This command will create optimized builds for both `x64` (Intel) and `arm64`
+    (Apple Silicon) architectures in the `out/` directory.
+
+3.  **Remove any existing custom build** (optional, but recommended to ensure
+    you're using the latest version):
+
+    ```sh
+    rm -rf "/Applications/Browserosaurus-Custom.app"
+    ```
+
+    > **Note:** Replace `Browserosaurus-Custom.app` with the actual name of your
+    > custom application if it's different.
+
+4.  **Copy the new build to your Applications folder**:
+
+    For Apple Silicon (M1/M2/M3) Macs:
+
+    ```sh
+    cp -R out/browserosaurus-darwin-arm64/Browserosaurus.app "/Applications/Browserosaurus-Custom.app"
+    ```
+
+    For Intel Macs:
+
+    ```sh
+    cp -R out/browserosaurus-darwin-x64/Browserosaurus.app "/Applications/Browserosaurus-Custom.app"
+    ```
+
+    > **Note:** You can rename `Browserosaurus-Custom.app` to any desired name
+    > for your application.
 
 For the maintainer:
 
